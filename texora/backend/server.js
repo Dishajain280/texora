@@ -82,19 +82,34 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.get("/api/health", (req, res) =>
   res.json({ status: "ok", message: "Texora API is running" }),
 );
+app.get("/health", (req, res) =>
+  res.json({ status: "ok", message: "Texora API is running" }),
+);
 
 app.use("/api/auth", authRoutes);
+app.use("/auth", authRoutes);
 app.use("/api/categories", categoryRoutes);
+app.use("/categories", categoryRoutes);
 app.use("/api/services", serviceRoutes);
+app.use("/services", serviceRoutes);
 app.use("/api/products", productRoutes);
+app.use("/products", productRoutes);
 app.use("/api/projects", projectRoutes);
+app.use("/projects", projectRoutes);
 app.use("/api/blogs", blogRoutes);
+app.use("/blogs", blogRoutes);
 app.use("/api/testimonials", testimonialRoutes);
+app.use("/testimonials", testimonialRoutes);
 app.use("/api/contact", contactRoutes);
+app.use("/contact", contactRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/orders", orderRoutes);
 app.use("/api/users", userRoutes);
+app.use("/users", userRoutes);
 app.use("/api/upload", uploadRoutes);
+app.use("/upload", uploadRoutes);
 app.use("/api/product-enquiries", productEnquiryRoutes);
+app.use("/product-enquiries", productEnquiryRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
