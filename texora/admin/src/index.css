@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply font-body bg-soft text-navy;
+}
+h1, h2, h3, h4, h5, h6 { @apply font-heading; }
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #F4F6FB; }
+::-webkit-scrollbar-thumb { background: #F2C230; border-radius: 8px; }
+
+.card { @apply bg-white rounded-2xl shadow-sm p-6; }
+.btn-gold { @apply inline-flex items-center gap-2 bg-gold hover:bg-gold-dark text-navy font-semibold px-5 py-2.5 rounded-xl transition-colors; }
+.input { @apply w-full px-4 py-2.5 rounded-xl border border-navy/10 focus:border-gold focus:outline-none text-sm; }
+.table-base { @apply w-full text-sm text-left; }
+.table-base th { @apply text-navy/50 font-semibold uppercase text-xs tracking-wide pb-3 border-b border-navy/10; }
+.table-base td { @apply py-3.5 border-b border-navy/5; }

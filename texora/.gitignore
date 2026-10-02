@@ -1,0 +1,22 @@
+# --- Frontend Dependencies & Builds ---
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.next/
+frontend/.env*
+
+# --- Backend Dependencies & Environment ---
+backend/node_modules/
+backend/.env
+backend/venv/
+backend/__pycache__/
+
+# --- Admin Dependencies & Builds ---
+admin/node_modules/
+admin/dist/
+admin/build/
+admin/.env*
+
+# --- System Files ---
+.DS_Store
+Thumbs.db
