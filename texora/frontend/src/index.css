@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply font-body text-navy bg-white;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-heading;
+}
+
+::selection {
+  @apply bg-gold text-navy;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #EEF2FA;
+}
+::-webkit-scrollbar-thumb {
+  background: #F2C230;
+  border-radius: 8px;
+}
+
+.container-x {
+  @apply max-w-7xl mx-auto px-5 md:px-8;
+}
+
+.btn-primary {
+  @apply inline-flex items-center gap-2 bg-gold hover:bg-gold-dark text-navy font-semibold px-6 py-3 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-gold/30 hover:-translate-y-0.5;
+}
+
+.btn-outline {
+  @apply inline-flex items-center gap-2 border-2 border-navy hover:bg-navy hover:text-white text-navy font-semibold px-6 py-3 rounded-full transition-all duration-300;
+}
+
+.section-badge {
+  @apply inline-flex items-center gap-2 bg-gold/10 text-gold-dark border border-gold/30 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider;
+}
+
+.section-title {
+  @apply text-3xl md:text-4xl lg:text-[42px] font-bold text-navy leading-tight;
+}
