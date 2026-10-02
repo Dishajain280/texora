@@ -1,58 +1,60 @@
-import { useEffect, useState } from 'react'
-import { toast } from 'react-hot-toast'
-import api from '../utils/api'
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import api from "../utils/api";
 
 export default function Orders() {
-  const [orders, setOrders] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchOrders = async () => {
     try {
-      setLoading(true)
-      const { data } = await api.get('/orders')
-      setOrders(data)
+      setLoading(true);
+      const { data } = await api.get("/orders");
+      setOrders(data);
     } catch (err) {
-      console.error(err)
-      toast.error('Failed to fetch orders')
+      console.error(err);
+      toast.error("Failed to fetch orders");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchOrders()
-  }, [])
+    fetchOrders();
+  }, []);
 
   const handleStatusChange = async (orderId, status) => {
     try {
-      await api.put(`/orders/${orderId}/status`, { status })
-      toast.success(`Order status updated to ${status}`)
-      fetchOrders()
+      await api.put(`/orders/${orderId}/status`, { status });
+      toast.success(`Order status updated to ${status}`);
+      fetchOrders();
     } catch (err) {
-      console.error(err)
-      toast.error('Failed to update status')
+      console.error(err);
+      toast.error("Failed to update status");
     }
-  }
+  };
 
   const handlePaymentStatusChange = async (orderId, paymentStatus) => {
     try {
-      await api.put(`/orders/${orderId}/status`, { paymentStatus })
-      toast.success(`Payment status updated to ${paymentStatus}`)
-      fetchOrders()
+      await api.put(`/orders/${orderId}/status`, { paymentStatus });
+      toast.success(`Payment status updated to ${paymentStatus}`);
+      fetchOrders();
     } catch (err) {
-      console.error(err)
-      toast.error('Failed to update payment status')
+      console.error(err);
+      toast.error("Failed to update payment status");
     }
-  }
+  };
 
-  if (loading) return <div className="p-6">Loading orders...</div>
+  if (loading) return <div className="p-6">Loading orders...</div>;
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-navy">Customer Orders</h1>
-          <p className="text-sm text-navy/60">Manage e-commerce orders, payment verification, and delivery status</p>
+          <p className="text-sm text-navy/60">
+            Manage e-commerce orders, payment verification, and delivery status
+          </p>
         </div>
       </div>
 
@@ -73,40 +75,56 @@ export default function Orders() {
               {orders.map((order) => (
                 <tr key={order._id} className="hover:bg-soft/50">
                   <td className="py-3 px-4">
-                    <p className="font-bold text-navy">#{order._id.slice(-6).toUpperCase()}</p>
+                    <p className="font-bold text-navy">
+                      #{order._id.slice(-6).toUpperCase()}
+                    </p>
                     <p className="text-xs text-navy/50">
                       {new Date(order.createdAt).toLocaleDateString()}
                     </p>
                   </td>
 
                   <td className="py-3 px-4">
-                    <p className="font-semibold text-navy">{order.shippingAddress?.name || order.user?.name || 'Guest User'}</p>
-                    <p className="text-xs text-navy/60">{order.shippingAddress?.email || order.user?.email}</p>
-                    <p className="text-xs text-navy/50">📞 {order.shippingAddress?.phone}</p>
+                    <p className="font-semibold text-navy">
+                      {order.shippingAddress?.name ||
+                        order.user?.name ||
+                        "Guest User"}
+                    </p>
+                    <p className="text-xs text-navy/60">
+                      {order.shippingAddress?.email || order.user?.email}
+                    </p>
+                    <p className="text-xs text-navy/50">
+                      📞 {order.shippingAddress?.phone}
+                    </p>
                   </td>
 
                   <td className="py-3 px-4">
                     <p className="font-medium text-navy text-xs">
-                      {order.products?.map((p) => `${p.quantity}x ${p.name || 'Product'}`).join(', ')}
+                      {order.products
+                        ?.map((p) => `${p.quantity}x ${p.name || "Product"}`)
+                        .join(", ")}
                     </p>
                   </td>
 
                   <td className="py-3 px-4 font-bold text-navy">
-                    ₹{order.totalAmount?.toLocaleString('en-IN')}
+                    ₹{order.totalAmount?.toLocaleString("en-IN")}
                   </td>
 
                   <td className="py-3 px-4">
                     <div className="space-y-1">
                       <span className="text-xs font-semibold block uppercase text-navy/70">
-                        {order.paymentMethod === 'razorpay' ? '💳 Razorpay' : '💵 COD'}
+                        {order.paymentMethod === "razorpay"
+                          ? "💳 Razorpay"
+                          : "💵 COD"}
                       </span>
                       <select
-                        value={order.paymentStatus || 'pending'}
-                        onChange={(e) => handlePaymentStatusChange(order._id, e.target.value)}
+                        value={order.paymentStatus || "pending"}
+                        onChange={(e) =>
+                          handlePaymentStatusChange(order._id, e.target.value)
+                        }
                         className={`text-xs font-bold px-2 py-1 rounded border outline-none ${
-                          order.paymentStatus === 'paid'
-                            ? 'bg-green-100 text-green-800 border-green-300'
-                            : 'bg-amber-100 text-amber-800 border-amber-300'
+                          order.paymentStatus === "paid"
+                            ? "bg-green-100 text-green-800 border-green-300"
+                            : "bg-amber-100 text-amber-800 border-amber-300"
                         }`}
                       >
                         <option value="pending">Pending</option>
@@ -118,8 +136,10 @@ export default function Orders() {
 
                   <td className="py-3 px-4">
                     <select
-                      value={order.status || 'pending'}
-                      onChange={(e) => handleStatusChange(order._id, e.target.value)}
+                      value={order.status || "pending"}
+                      onChange={(e) =>
+                        handleStatusChange(order._id, e.target.value)
+                      }
                       className="text-xs font-semibold px-2 py-1 rounded border border-navy/20 bg-white text-navy outline-none"
                     >
                       <option value="pending">Pending</option>
@@ -144,5 +164,5 @@ export default function Orders() {
         </div>
       </div>
     </div>
-  )
+  );
 }
