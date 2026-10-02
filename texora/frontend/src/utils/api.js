@@ -1,19 +1,19 @@
-import axios from 'axios'
+import axios from "axios";
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+const API_URL = import.meta.env.VITE_API_URL || "/api";
 
 const api = axios.create({
   baseURL: API_URL,
-  headers: { 'Content-Type': 'application/json' },
-})
+  headers: { "Content-Type": "application/json" },
+});
 
 // Attach token automatically if present
 api.interceptors.request.use((config) => {
-  const user = JSON.parse(localStorage.getItem('texora_user'))
+  const user = JSON.parse(localStorage.getItem("texora_user"));
   if (user?.token) {
-    config.headers.Authorization = `Bearer ${user.token}`
+    config.headers.Authorization = `Bearer ${user.token}`;
   }
-  return config
-})
+  return config;
+});
 
-export default api
+export default api;
